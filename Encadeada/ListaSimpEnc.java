@@ -1,7 +1,8 @@
 package ED1.Encadeada;
 
 import java.util.Iterator;
-import java.util.Objects;
+import java.util.NoSuchElementException;
+
 
 public class ListaSimpEnc<T> implements IListaSimpEnc<T> {
 
@@ -114,29 +115,86 @@ public class ListaSimpEnc<T> implements IListaSimpEnc<T> {
 
     @Override
     public void RemoverFim() {
-        fim = fim.getProximo();
+        NoSimpEnc<T> aux = inicio;
+        if (!estaVazia()){
+            if (contElementos == 1){
+                this.clear();
+            }else {
+                for (int i = 0; i < contElementos-2; i++) {
+                    aux = aux.getProximo();
+                }
+                aux.setProximo(null);
+                fim= aux;
+                contElementos--;
+            }
+        }
     }
 
     @Override
     public void RemoverElemento(T Elemento) {
-        NoSimpEnc<T> aux = inicio;
+
         if (contem(Elemento)){
-            for (int i = 0; i < contElementos; i++) {
-                if (aux.equals(Elemento)){
-                        aux = (aux.getProximo());
-                        break;
-                    }
-                aux = aux.getProximo();
+            if (this.inicio.getElemento().equals(Elemento)){
+                this.RemoverInicio();
+            }else if (fim.getElemento().equals(Elemento)){
+                this.RemoverFim();
+            }else {
+                NoSimpEnc<T> aux = inicio;
+                for (int j = 0; j < posicao(Elemento)-1; j++) {
+                    aux = aux.getProximo();
                 }
+                aux.setProximo(aux.getProximo().getProximo());
+                contElementos--;
 
             }
 
         }
 
+    }
+
+    private int posicao(T Elemento){
+        NoSimpEnc <T> aux = this.inicio;
+       int  pos = -1;
+        for (int i = 0; i < contElementos; i++) {
+            if (aux.getElemento().equals(Elemento)){
+                return i;
+            }
+
+            aux = aux.getProximo();
+        }
+        return pos;
+    }
+
     @Override
     public Iterator iterator() {
-        return null;
+        Iterator<T> myIterator = new Iterator<T>() {
+
+            NoSimpEnc posicao = inicio;
+
+            @Override
+            public boolean hasNext() {
+                if (posicao != null) {
+                    return true;
+                } else {
+                    this.posicao = inicio;
+                    return false;
+                }
+            }
+
+            @Override
+            public T next() throws NoSuchElementException {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                } else {
+                    T elemento = (T) posicao.getElemento();
+                    posicao = posicao.getProximo();
+                    return elemento;
+                }
+            }
+        };
+        return myIterator;
     }
+
 
     @Override
     public String toString() {
