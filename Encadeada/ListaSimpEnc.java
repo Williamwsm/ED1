@@ -91,6 +91,51 @@ public class ListaSimpEnc<T> implements IListaSimpEnc<T> {
         }
 
     }
+    public  void InserirPartes(ListaSimpEnc<T> lista, int quantidade){
+        if (lista.contElementos < quantidade || lista.estaVazia()){ // verifica se a lista estar vazia
+            //ou se o usuario deseja inserir mais elementos do q a lista possui
+            throw new IndexOutOfBoundsException("A lista nao possui tantos indeces");
+        }else {
+            NoSimpEnc<T> aux = lista.getInicio(); // O No auxiliar recebe o inicio da lista
+            for (int i = 0; i <quantidade ; i++) {
+                this.InserirFim(aux.getElemento()); // adiciona o elemento no fim da lista
+                aux = aux.getProximo(); // atualiza o valor para o proximo
+            }
+        }
+    }
+
+    public  void InsertionSort(){
+        if (this.estaVazia() || this.contElementos == 1 ){
+            throw new RuntimeException("A lista nao pode ser Ordernada");
+        }
+        NoSimpEnc<T> ordenado = null;
+        NoSimpEnc<T> atual = this.getInicio();
+
+        while (atual != null) {
+
+            NoSimpEnc<T> prox = atual.getProximo();
+
+            if (ordenado == null || ordenado.getElemento().compareTo(atual.getElemento()) > 0) {
+                // Inserir no início da lista ordenada.
+                atual.setProximo(ordenado);
+                ordenado = atual;
+            } else {
+                // Buscar a posição correta na lista ordenada.
+                NoSimpEnc<T> indece = ordenado; // impede q o no "ordenado" seja modificado
+                while (indece.getProximo() != null && indece.getProximo().getElemento().compareTo(atual.getElemento()) < 0) {
+                    indece = indece.getProximo();
+                }
+                atual.setProximo(indece.getProximo());
+                indece.setProximo(atual);
+            }
+
+            atual = prox;
+        }
+
+        // Atualizar o inicio da lista.
+        this.inicio = ordenado;
+
+    }
 
     @Override
     public boolean contem(T elemento) {
