@@ -181,38 +181,6 @@ public class ListSimpEnc<T> implements IListSimpEnc<T> {
 
     }
 
-
-    @Override
-    public Iterator iterator() {
-        Iterator<T> myIterator = new Iterator<T>() {
-
-            No posicao = inicio;
-
-            @Override
-            public boolean hasNext() {
-                if (posicao != null) {
-                    return true;
-                } else {
-                    this.posicao = inicio;
-                    return false;
-                }
-            }
-
-            @Override
-            public T next() throws NoSuchElementException {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                } else {
-                    T elemento = (T) posicao.getDado();
-                    posicao = posicao.getProximo();
-                    return elemento;
-                }
-            }
-        };
-        return myIterator;
-
-    }
-
     @Override
     public String toString() {
         No<T> novoNo = this.getInicio();
