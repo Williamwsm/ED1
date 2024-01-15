@@ -1,7 +1,5 @@
 package ED1.Prova;
 
-import java.util.Iterator;
-
 public interface IListSimpEnc<T> {
     public No<T> getInicio();
 
