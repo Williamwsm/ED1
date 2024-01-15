@@ -1,6 +1,5 @@
 package ED1.Prova;
 
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class ListSimpEnc<T> implements IListSimpEnc<T> {
