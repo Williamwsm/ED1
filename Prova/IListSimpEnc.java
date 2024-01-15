@@ -27,6 +27,5 @@ public interface IListSimpEnc<T> {
     public  void adicionarListaRecursivamente(ListSimpEnc<T> listSimpEnc) throws Exception;
     public String toString();
 
-    public Iterator<T> iterator();
 
 }
