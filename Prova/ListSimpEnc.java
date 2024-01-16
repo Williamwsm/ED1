@@ -168,8 +168,7 @@ public class ListSimpEnc<T> implements IListSimpEnc<T> {
             No<T> novoNo = this.getInicio();
             for (int i = 0; i < posicao - 1; i++) {
                 if (i + 1 == posicao - 1) {
-                    novoNo.setProximo(null);
-                    this.setFim(novoNo);
+                    novoNo.setProximo(novoNo.getProximo().getProximo());
                     this.setTamanho(getTamanho() - 1);
                 } else {
                     novoNo = novoNo.getProximo();
